@@ -1,6 +1,11 @@
+import 'package:carpool/screens/ride_detail_form/ride_detail_form.dart';
+import 'package:carpool/screens/rider_home/rider_home.dart';
 import 'package:flutter/material.dart';
+import 'theme.dart';
+import 'routes.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -11,11 +16,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const Center(child: Text('Base Project'),)
+      debugShowCheckedModeBanner: false,
+      title: 'Carpool',
+      theme: theme(),
+      initialRoute: RiderHome.routeName,
+      routes: routes,
+      supportedLocales: const [Locale('en', 'US')],
     );
   }
 }
