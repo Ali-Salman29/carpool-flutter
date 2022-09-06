@@ -1,5 +1,7 @@
 import 'package:carpool/screens/ride_detail_form/ride_detail_form.dart';
 import 'package:carpool/screens/rider_home/rider_home.dart';
+import 'screens/Car-detail-form/addcardetails.dart';
+import 'screens/CarHome/carslist.dart';
 import 'package:flutter/material.dart';
 import 'theme.dart';
 import 'routes.dart';
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Carpool',
       theme: theme(),
-      initialRoute: RiderHome.routeName,
+      initialRoute: "SignUpScreen",
       routes: routes,
       supportedLocales: const [Locale('en', 'US')],
     );

@@ -31,15 +31,19 @@ class AddItemCard extends StatelessWidget {
         children: [
           Text(
             header,
-            style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold
-            ),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
-          Text(message, style: const TextStyle(color: kTextLightColor),),
-          InkWell(
-            child: Text(buttonText, style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),),
-            onTap: (){},
+          Text(
+            message,
+            style: const TextStyle(color: kTextLightColor),
+          ),
+          TextButton(
+            child: Text(
+              buttonText,
+              style: TextStyle(
+                  fontSize: 14, color: Theme.of(context).primaryColor),
+            ),
+          onPressed: onPressed,
           ),
         ],
       ),

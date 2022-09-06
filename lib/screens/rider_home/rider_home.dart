@@ -2,6 +2,8 @@ import 'package:carpool/components/custom_drawer.dart';
 import 'package:carpool/screens/rider_home/components/rider_appbar.dart';
 import 'package:carpool/screens/rider_home/components/rider_navigation_bar.dart';
 import 'package:carpool/screens/rider_ride/rider_ride.dart';
+import 'package:carpool/screens/CarHome/carslist.dart';
+import 'components/historycard.dart';
 import 'package:flutter/material.dart';
 
 class RiderHome extends StatefulWidget {
@@ -18,8 +20,8 @@ class _RiderHomeState extends State<RiderHome> {
   final List<String> _menuItems = ['Rides', 'Cars', 'History'];
   final List<Widget> _widgetOptions = <Widget>[
     const RiderRide(),
-    const Text('hello2'),
-    const Text('hello3'),
+   const CarsList(),
+    HistoryCard(ridenumber:"200923", route: "Lahore to Islamabad", carname: "Mehran", dateTime:"10-09-2022")
   ];
 
   void _onItemTapped(int index) {

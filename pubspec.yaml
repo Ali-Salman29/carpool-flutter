@@ -62,6 +62,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - fonts/montserrat/
+    - lib/assets/car.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -78,6 +79,12 @@ flutter:
     - family:  CustomIcons
       fonts:
         - asset: fonts/CustomIcons.ttf
+    - family:  MoreCustomIcons
+      fonts:
+       - asset: fonts/MoreCustomIcons.ttf
+    - family:  CustomCar
+      fonts:
+        - asset: fonts/CustomCar.ttf
     - family: Montserrat
       fonts:
         - asset: fonts/montserrat/Montserrat-Light.otf
