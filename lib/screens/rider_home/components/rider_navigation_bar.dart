@@ -35,18 +35,18 @@ class RiderBottomNavigationBar extends StatelessWidget {
           elevation: 5,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(CustomIcons.steering_wheel),
+              icon: Icon(CustomIcons.steering_wheel_svgrepo_com),
               label: 'Home',
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                CustomIcons.car,
+                CustomIcons.car_svgrepo_com,
               ),
               label: 'Cars',
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                CustomIcons.history_1,
+                CustomIcons.history_svgrepo_com,
               ),
               label: 'Account',
             ),

@@ -1,5 +1,7 @@
 import 'package:carpool/screens/ride_detail_form/ride_detail_form.dart';
 import 'package:carpool/screens/rider_home/rider_home.dart';
+import 'screens/Car-detail-form/add_car_details.dart';
+import 'screens/car_home/carslist.dart';
 import 'package:flutter/material.dart';
 import 'theme.dart';
 import 'routes.dart';

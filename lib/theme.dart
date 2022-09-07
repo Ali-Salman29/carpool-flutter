@@ -28,7 +28,7 @@ ThemeData theme() {
       visualDensity: VisualDensity.adaptivePlatformDensity,
       iconTheme: const IconThemeData(color: kIconColor),
       listTileTheme: const ListTileThemeData(iconColor: kIconColor),
-      timePickerTheme: TimePickerThemeData(
+      timePickerTheme: const TimePickerThemeData(
           helpTextStyle: TextStyle(color: kTextLightColor)));
 }
 
