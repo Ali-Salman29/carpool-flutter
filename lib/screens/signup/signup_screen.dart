@@ -40,7 +40,7 @@ class _SignUpState extends State<SignUp> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Center(
-                      child: Image(image: AssetImage("lib/assets/car.png"))),
+                      child: Image(image: AssetImage("/assets/app_icon.png"))),
                   const Text(
                     "SignUp",
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
