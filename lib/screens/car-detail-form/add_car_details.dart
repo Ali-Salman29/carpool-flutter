@@ -9,18 +9,16 @@ class AddCarDetails extends StatefulWidget {
 }
 
 class _AddCarDetailsState extends State<AddCarDetails> {
-  TextEditingController carmodel = TextEditingController();
-  TextEditingController registeredyear = TextEditingController();
+  TextEditingController carModel = TextEditingController();
+  TextEditingController registeredYear = TextEditingController();
   TextEditingController registeration = TextEditingController();
-  TextEditingController numberplate = TextEditingController();
+  TextEditingController numberPlate = TextEditingController();
   TextEditingController color = TextEditingController();
 
-  final carkey = GlobalKey<FormState>();
+  final carKey = GlobalKey<FormState>();
 
   void validateinputs() {
-    if (carkey.currentState!.validate()) {
-      // If the form is valid, display a snackbar. In the real world,
-      // you'd often call a server or save the information in a database.
+    if (carKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Processing Data')),
       );
@@ -33,7 +31,7 @@ class _AddCarDetailsState extends State<AddCarDetails> {
       appBar: AppBar(),
       body: SingleChildScrollView(
           child: Form(
-        key: carkey,
+        key: carKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -66,10 +64,9 @@ class _AddCarDetailsState extends State<AddCarDetails> {
                     decoration: const InputDecoration(
                       hintText: "Car model",
                     ),
-                    controller: carmodel,
+                    controller: carModel,
                   ),
                   const SizedBox(height: 20),
-
                   TextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -80,7 +77,7 @@ class _AddCarDetailsState extends State<AddCarDetails> {
                     decoration: const InputDecoration(
                       hintText: "Registered Year",
                     ),
-                    controller: registeredyear,
+                    controller: registeredYear,
                   ),
                   const SizedBox(
                     height: 20,
@@ -111,7 +108,7 @@ class _AddCarDetailsState extends State<AddCarDetails> {
                     decoration: const InputDecoration(
                       hintText: "Number Plate",
                     ),
-                    controller: numberplate,
+                    controller: numberPlate,
                   ),
                   const SizedBox(
                     height: 20,
@@ -132,7 +129,6 @@ class _AddCarDetailsState extends State<AddCarDetails> {
                   const SizedBox(
                     height: 150,
                   ),
-
                   GradientButton(
                       buttonText: "Add a Car",
                       onPressed: () {

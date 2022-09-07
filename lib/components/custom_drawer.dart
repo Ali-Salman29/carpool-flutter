@@ -38,7 +38,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             child: Text('A'),
                             radius: 30,
                           ),
-                          Icon(CustomIcons.menu)
+                          Icon(CustomIcons.burger_list_menu_navigation_svgrepo_com)
                         ],
                       ),
                       const Text(
@@ -55,7 +55,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
             ListTile(
                 leading: const Icon(
-                  CustomIcons.home,
+                  CustomIcons.home_svgrepo_com,
                 ),
                 title: const Text(
                   "Share A Ride",
@@ -63,7 +63,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 onTap: () {}),
             ListTile(
                 leading: const Icon(
-                  CustomIcons.history_full,
+                  CustomIcons.history_svgrepo_com__1_,
                 ),
                 title: const Text(
                   "Your Rides",
@@ -71,7 +71,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 onTap: () {}),
             ListTile(
                 leading: const Icon(
-                  CustomIcons.settings,
+                  CustomIcons.settings_svgrepo_com,
                 ),
                 title: const Text(
                   "Account Settings",

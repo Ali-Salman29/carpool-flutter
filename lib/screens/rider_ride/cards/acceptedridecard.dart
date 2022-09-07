@@ -1,6 +1,7 @@
 import 'dart:ui';
 
-import 'package:carpool/more_custom_icons_icons.dart';
+import 'package:carpool/custom_icons.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -58,7 +59,7 @@ class _AcceptedRideState extends State<AcceptedRide> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10))),
                   onPressed: () {},
-                  icon: const Icon(MoreCustomIcons.whatsapp),
+                  icon: const Icon(CustomIcons.whatsapp),
                   label: const Text("WhatsApp"))
             ],
           )

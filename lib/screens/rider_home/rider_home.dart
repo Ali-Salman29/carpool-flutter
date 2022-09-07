@@ -2,7 +2,8 @@ import 'package:carpool/components/custom_drawer.dart';
 import 'package:carpool/screens/rider_home/components/rider_appbar.dart';
 import 'package:carpool/screens/rider_home/components/rider_navigation_bar.dart';
 import 'package:carpool/screens/rider_ride/rider_ride.dart';
-import 'package:carpool/screens/CarHome/carslist.dart';
+import 'package:carpool/screens/car_home/carslist.dart';
+import '../car_home/carslist.dart';
 import 'components/historycard.dart';
 import 'package:flutter/material.dart';
 

@@ -79,12 +79,7 @@ flutter:
     - family:  CustomIcons
       fonts:
         - asset: fonts/CustomIcons.ttf
-    - family:  MoreCustomIcons
-      fonts:
-       - asset: fonts/MoreCustomIcons.ttf
-    - family:  CustomCar
-      fonts:
-        - asset: fonts/CustomCar.ttf
+   
     - family: Montserrat
       fonts:
         - asset: fonts/montserrat/Montserrat-Light.otf

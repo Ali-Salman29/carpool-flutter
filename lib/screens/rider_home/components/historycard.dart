@@ -13,42 +13,47 @@ class HistoryCard extends StatelessWidget {
     Key? key,
     required this.ridenumber,
     required this.route,
-    required this.carname, required this.dateTime,
+    required this.carname,
+    required this.dateTime,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(runSpacing:50,children: [
-Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      color: Colors.black,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-       Wrap(spacing: 5,children: [
-         Text(
-          "Ride#$ridenumber",
-          style: TextStyle(fontSize: 20),
-        ),
-        Container(padding: EdgeInsets.all(20),
-          child: Text(dateTime),
-        decoration: BoxDecoration(
-    border: Border.all(
-      
-    ),
-    borderRadius: BorderRadius.all(Radius.circular(20))
-  ),)
-       ],),
-        Text(
-          route,
-          style: TextStyle(fontSize: 10, color: Colors.white38),
-        ),
-         Text(
-          carname,
-          style: TextStyle(fontSize: 10, color: Colors.white38),
-        ),
-      ]),
-    )
-    ],)
-    ;
+    return Wrap(
+      runSpacing: 50,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          margin: const EdgeInsets.symmetric(horizontal: 5),
+          color: Colors.black,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Wrap(
+              spacing: 5,
+              children: [
+                Text(
+                  "Ride#$ridenumber",
+                  style: const TextStyle(fontSize: 20),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Text(dateTime),
+                  decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20))),
+                )
+              ],
+            ),
+            Text(
+              route,
+            ),
+            Text(
+              carname,
+            ),
+          ]),
+        )
+      ],
+    );
   }
 }

@@ -22,7 +22,7 @@ class RiderAppBar extends StatelessWidget with PreferredSizeWidget {
         builder: (BuildContext context) {
           return IconButton(
             icon: const Icon(
-              CustomIcons.menu,
+              Icons.menu,
             ),
             onPressed: () {
               Scaffold.of(context).openDrawer();
