@@ -1,6 +1,10 @@
 import 'package:carpool/constants.dart';
 import 'package:carpool/custom_icons.dart';
+import 'package:carpool/providers/app_settings.dart';
+import 'package:carpool/screens/rider_home/rider_home.dart';
+import 'package:carpool/screens/search_ride/search_ride.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({Key? key}) : super(key: key);
@@ -12,6 +16,7 @@ class CustomDrawer extends StatefulWidget {
 class _CustomDrawerState extends State<CustomDrawer> {
   @override
   Widget build(BuildContext context) {
+    bool isRiderMode = Provider.of<AppSettings>(context, listen: false).isRiderMode;
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topRight: Radius.circular(50),
@@ -38,7 +43,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             child: Text('A'),
                             radius: 30,
                           ),
-                          Icon(CustomIcons.burger_list_menu_navigation_svgrepo_com)
+                          Icon(CustomIcons.menu)
                         ],
                       ),
                       const Text(
@@ -53,25 +58,44 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     ],
                   )),
             ),
-            ListTile(
+            if(!isRiderMode)
+            ...[ListTile(
                 leading: const Icon(
-                  CustomIcons.home_svgrepo_com,
+                  CustomIcons.home,
                 ),
                 title: const Text(
-                  "Share A Ride",
+                  "Share a Ride",
                 ),
-                onTap: () {}),
+                onTap: () {
+                  Navigator.of(context).pushNamed(RiderHome.routeName);
+                  Provider.of<AppSettings>(context, listen: false).switchRiderMode();
+                }),
             ListTile(
                 leading: const Icon(
-                  CustomIcons.history_svgrepo_com__1_,
+                  CustomIcons.history,
                 ),
                 title: const Text(
                   "Your Rides",
                 ),
                 onTap: () {}),
+            ],
+            if (isRiderMode)
+              ...[
+                ListTile(
+                    leading: const Icon(
+                      CustomIcons.search,
+                    ),
+                    title: const Text(
+                      "Search a Ride",
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pushNamed(SearchRide.routeName);
+                      Provider.of<AppSettings>(context, listen: false).switchRiderMode();
+                    }),
+              ],
             ListTile(
                 leading: const Icon(
-                  CustomIcons.settings_svgrepo_com,
+                  CustomIcons.settings,
                 ),
                 title: const Text(
                   "Account Settings",

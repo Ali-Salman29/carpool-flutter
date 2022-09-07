@@ -1,10 +1,10 @@
 import 'package:carpool/components/custom_drawer.dart';
-import 'package:carpool/screens/rider_home/components/rider_appbar.dart';
+import 'package:carpool/components/rider_appbar.dart';
+import 'package:carpool/screens/cars/cars.dart';
+import 'package:carpool/screens/rider_history/rider_history.dart';
 import 'package:carpool/screens/rider_home/components/rider_navigation_bar.dart';
 import 'package:carpool/screens/rider_ride/rider_ride.dart';
-import 'package:carpool/screens/car_home/carslist.dart';
-import '../car_home/carslist.dart';
-import 'components/historycard.dart';
+import '../rider_history/components/history_card.dart';
 import 'package:flutter/material.dart';
 
 class RiderHome extends StatefulWidget {
@@ -21,8 +21,8 @@ class _RiderHomeState extends State<RiderHome> {
   final List<String> _menuItems = ['Rides', 'Cars', 'History'];
   final List<Widget> _widgetOptions = <Widget>[
     const RiderRide(),
-   const CarsList(),
-    HistoryCard(ridenumber:"200923", route: "Lahore to Islamabad", carname: "Mehran", dateTime:"10-09-2022")
+    const Cars(),
+    const RiderHistory(),
   ];
 
   void _onItemTapped(int index) {
@@ -37,6 +37,7 @@ class _RiderHomeState extends State<RiderHome> {
         drawer: const CustomDrawer(),
         appBar: RiderAppBar(
           title: _menuItems[_selectedIndex],
+          canPop: false,
         ),
         body: _widgetOptions.elementAt(_selectedIndex),
         bottomNavigationBar: RiderBottomNavigationBar(
