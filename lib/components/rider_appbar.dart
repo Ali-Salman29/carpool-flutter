@@ -7,8 +7,9 @@ class RiderAppBar extends StatelessWidget with PreferredSizeWidget {
   final Size preferredSize;
 
   final String? title;
+  final bool canPop;
 
-  const RiderAppBar({Key? key, this.title}): preferredSize = const Size.fromHeight(80), super(key: key);
+  const RiderAppBar({Key? key, this.title, this.canPop=true}): preferredSize = const Size.fromHeight(70), super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,23 +19,22 @@ class RiderAppBar extends StatelessWidget with PreferredSizeWidget {
         style: const TextStyle(
             fontWeight: FontWeight.bold, color: kTextColor, fontSize: 24),
       ): null,
-      leading: Builder(
-        builder: (BuildContext context) {
-          return IconButton(
-            icon: const Icon(
-              Icons.menu,
-            ),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-          );
+      leading:  IconButton(
+        icon: Icon(
+          canPop? Icons.arrow_back_ios_rounded: CustomIcons.menu,
+        ),
+        onPressed: () {
+          if (canPop){
+            Navigator.of(context).pop();
+          } else {
+            Scaffold.of(context).openDrawer();
+          }
         },
       ),
-      backgroundColor: Colors.transparent,
+      backgroundColor: kBackgroundColor,
       centerTitle: true,
       elevation: 0.0,
-      automaticallyImplyLeading: true,
+      automaticallyImplyLeading: false,
     );
   }
 }

@@ -27,7 +27,7 @@ ThemeData theme() {
       inputDecorationTheme: inputDecorationTheme(),
       visualDensity: VisualDensity.adaptivePlatformDensity,
       iconTheme: const IconThemeData(color: kIconColor),
-      listTileTheme: const ListTileThemeData(iconColor: kIconColor),
+      listTileTheme: const ListTileThemeData(iconColor: kIconColor, textColor: kTextLightColor),
       timePickerTheme: const TimePickerThemeData(
           helpTextStyle: TextStyle(color: kTextLightColor)));
 }
@@ -52,9 +52,15 @@ TextTheme textTheme() {
   return const TextTheme(
     headline1: TextStyle(color: kTextColor, fontWeight: FontWeight.w700),
     headline2: TextStyle(color: kTextColor, fontWeight: FontWeight.w600),
+    headline3: TextStyle(color: kTextColor, fontWeight: FontWeight.w600),
+    headline4: TextStyle(color: kTextColor, fontWeight: FontWeight.w600),
+    headline5: TextStyle(color: kTextColor, fontWeight: FontWeight.w600),
     bodyText1: TextStyle(color: kTextColor),
     bodyText2: TextStyle(color: kTextColor),
     subtitle1: TextStyle(color: kTextColor),
+    subtitle2: TextStyle(color: kTextColor),
+    overline: TextStyle(color: kTextColor),
+
   );
 }
 

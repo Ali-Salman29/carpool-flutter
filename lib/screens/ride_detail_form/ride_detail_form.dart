@@ -1,7 +1,6 @@
 import 'package:carpool/components/gradient_button.dart';
 import 'package:carpool/custom_icons.dart';
-import 'package:carpool/custom_icons.dart';
-import 'package:carpool/screens/rider_home/components/rider_appbar.dart';
+import 'package:carpool/components/rider_appbar.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -86,7 +85,7 @@ class _AddRideDetailsState extends State<AddRideDetails> {
                     decoration: const InputDecoration(
                       hintText: "Select a Car",
                       icon: Icon(
-                        CustomIcons.car,
+                        CustomIcons.taxi,
                       ),
                     ),
                     value: selectedCar,
@@ -130,13 +129,11 @@ class _AddRideDetailsState extends State<AddRideDetails> {
                   ),
                   DropdownButtonFormField(
                     isExpanded: true,
-                    icon: const Icon(
-                      CustomIcons.person_svgrepo_com__1_,
-                    ),
+                    icon: const Icon(Icons.arrow_drop_down_circle),
                     decoration: const InputDecoration(
                       hintText: "Select a Car",
                       icon: Icon(
-                        Icons.person,
+                        CustomIcons.person_1,
                       ),
                     ),
                     value: selectedGender,

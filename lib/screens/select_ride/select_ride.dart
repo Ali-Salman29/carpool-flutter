@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'components/card.dart';
 
 class SelectRide extends StatefulWidget {
+  static String routeName = "/select_ride";
   const SelectRide({Key? key}) : super(key: key);
 
   @override
@@ -17,7 +18,7 @@ class _SelectRideState extends State<SelectRide> {
     });
   }
 
-  void Hide() {
+  void hide() {
     setState(() {
       isVisible = false;
     });
@@ -67,7 +68,7 @@ class _SelectRideState extends State<SelectRide> {
                         decoration: InputDecoration(
                             label: const Text("Pickup Location #2"),
                             suffixIcon: IconButton(
-                                onPressed: Hide,
+                                onPressed: hide,
                                 icon: const Icon(Icons.cancel)))),
                   ),
                   TextFormField(
@@ -98,7 +99,7 @@ class _SelectRideState extends State<SelectRide> {
                         decoration: InputDecoration(
                             label: const Text("Dropoff Location #2"),
                             suffixIcon: IconButton(
-                                onPressed: Hide,
+                                onPressed: hide,
                                 icon: const Icon(Icons.cancel)))),
                   ),
                   TextFormField(

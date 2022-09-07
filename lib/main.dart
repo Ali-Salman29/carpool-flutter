@@ -1,8 +1,11 @@
-import 'package:carpool/screens/ride_detail_form/ride_detail_form.dart';
-import 'package:carpool/screens/rider_home/rider_home.dart';
-import 'screens/Car-detail-form/add_car_details.dart';
-import 'screens/car_home/carslist.dart';
+import 'package:carpool/providers/app_settings.dart';
+import 'package:carpool/providers/auth.dart';
+import 'package:carpool/providers/user_ride.dart';
+import 'package:carpool/screens/search_ride/search_ride.dart';
+import 'package:carpool/screens/signin/singin.dart';
+import 'package:carpool/screens/splash/splash.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'theme.dart';
 import 'routes.dart';
 
@@ -17,13 +20,37 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Carpool',
-      theme: theme(),
-      initialRoute: RiderHome.routeName,
-      routes: routes,
-      supportedLocales: const [Locale('en', 'US')],
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => Auth(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AppSettings(),
+        ),
+        ChangeNotifierProvider(
+            create: (_) => UserRide(),
+        )
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Carpool',
+        theme: theme(),
+        // initialRoute: RiderHome.routeName,
+        home: Builder(
+          builder: (context) => FutureBuilder(
+            future: Provider.of<Auth>(context, listen: false).getCurrentUser(),
+            builder: (context, snapshot) =>
+                snapshot.connectionState == ConnectionState.waiting
+                    ? const SplashScreen()
+                    : snapshot.hasData
+                        ? const SearchRide()
+                        : const SignIn(),
+          ),
+        ),
+        routes: routes,
+        supportedLocales: const [Locale('en', 'US')],
+      ),
     );
   }
 }

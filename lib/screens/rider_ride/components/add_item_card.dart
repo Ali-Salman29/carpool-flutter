@@ -18,8 +18,9 @@ class AddItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.all(10),
       decoration: const BoxDecoration(
         border: BorderDirectional(
           top: BorderSide(color: kTextLightColor),
@@ -37,13 +38,9 @@ class AddItemCard extends StatelessWidget {
             message,
             style: const TextStyle(color: kTextLightColor),
           ),
-          TextButton(
-            child: Text(
-              buttonText,
-              style: TextStyle(
-                  fontSize: 14, color: Theme.of(context).primaryColor),
-            ),
-          onPressed: onPressed,
+          InkWell(
+            child: Text(buttonText, style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),),
+            onTap: onPressed,
           ),
         ],
       ),
