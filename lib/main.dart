@@ -27,34 +27,37 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<Auth, Rider>(
           create: (ctx) => Rider('', null, [], []),
-          update: (ctx, auth, previousRider) =>
-              Rider(auth.userToken, previousRider?.rider, previousRider?.cities ?? [], previousRider?.cars ?? []),
+          update: (ctx, auth, previousRider) => Rider(
+              auth.userToken,
+              previousRider?.rider,
+              previousRider?.cities ?? [],
+              previousRider?.cars ?? []),
         ),
         ChangeNotifierProvider(
           create: (_) => AppSettings(),
         ),
         ChangeNotifierProvider(
-            create: (_) => UserRide(),
+          create: (_) => UserRide(),
         )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Carpool',
         theme: theme(),
-        // initialRoute: SplashScreen.routeName,
-        home: Builder(
-          builder: (context) => FutureBuilder(
-            future: Provider.of<Auth>(context, listen: false).getCurrentUser(),
-            builder: (context, snapshot) =>
-                snapshot.connectionState == ConnectionState.waiting
-                    ? const SplashScreen()
-                    : snapshot.hasError
-                    ? Container()
-                    : snapshot.hasData
-                        ? const SearchRide()
-                        : const SignIn(),
-          ),
-        ),
+        initialRoute: SignIn.routeName,
+        // home: Builder(
+        //   builder: (context) => FutureBuilder(
+        //     future: Provider.of<Auth>(context, listen: false).getCurrentUser(),
+        //     builder: (context, snapshot) =>
+        //         snapshot.connectionState == ConnectionState.waiting
+        //             ? const SplashScreen()
+        //             : snapshot.hasError
+        //             ? Container()
+        //             : snapshot.hasData
+        //                 ? const SearchRide()
+        //                 : const SignIn(),
+        //   ),
+        // ),
         routes: routes,
         supportedLocales: const [Locale('en', 'US')],
       ),

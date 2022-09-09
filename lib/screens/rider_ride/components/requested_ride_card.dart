@@ -73,7 +73,7 @@ class RequestedRideCard extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     shape: const StadiumBorder(),
-                    backgroundColor: kErrorColor,
+                    primary: kErrorColor,
                   ),
                   onPressed: () {},
                   child: const Text("Reject"),

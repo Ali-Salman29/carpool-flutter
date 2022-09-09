@@ -46,104 +46,108 @@ class RideCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Wrap(
-                    spacing: 5,
-                    children: [
-                      const Icon(
-                        CustomIcons.radio_button_on,
-                        color: kSelectedItemColor,
-                      ),
-                      Text(
-                        toCity,
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ],
-                  ),
-                  ...pickups
-                      .map((e) => Row(
-                            children: [
-                              const SizedBox(
-                                width: 30,
-                              ),
-                              Text(
-                                'o $e',
-                                style: const TextStyle(
-                                    fontSize: 14, color: kTextLightColor),
-                              ),
-                            ],
-                          ))
-                      .toList(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Wrap(
-                    spacing: 5,
-                    children: [
-                      const Icon(
-                        CustomIcons.radio_button_on,
-                        color: kSelectedItemColor,
-                      ),
-                      Text(
-                        fromCity,
-                        style: const TextStyle(fontSize: 18),
-                      ),
-                    ],
-                  ),
-                  ...dropOffs
-                      .map((e) => Row(
-                            children: [
-                              const SizedBox(
-                                width: 30,
-                              ),
-                              Text(
-                                'o $e',
-                                style: const TextStyle(
-                                    fontSize: 14, color: kTextLightColor),
-                              ),
-                            ],
-                          ))
-                      .toList(),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color(0xFF54565D),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Wrap(
+                      spacing: 5,
+                      children: [
+                        const Icon(
+                          CustomIcons.radio_button_on,
+                          color: kSelectedItemColor,
+                        ),
+                        Text(
+                          toCity,
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Text(date, style: const TextStyle(fontWeight: FontWeight.bold),),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Wrap(
-                    spacing: 10,
-                    alignment: WrapAlignment.center,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      Text(car, style: const TextStyle(fontWeight: FontWeight.w600),),
-                      const Icon(Icons.not_listed_location, size: 20,),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Wrap(
-                    spacing: 10,
-                    alignment: WrapAlignment.center,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      Text('$peopleLeft People Left', style: const TextStyle(fontWeight: FontWeight.w600),),
-                      const Icon(CustomIcons.person, size: 20,),
-                    ],
-                  )
-                ],
+                    ...pickups
+                        .map((e) => Row(
+                              children: [
+                                const SizedBox(
+                                  width: 30,
+                                ),
+                                Text(
+                                  'o $e',
+                                  style: const TextStyle(
+                                      fontSize: 14, color: kTextLightColor),
+                                ),
+                              ],
+                            ))
+                        .toList(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Wrap(
+                      spacing: 5,
+                      children: [
+                        const Icon(
+                          CustomIcons.radio_button_on,
+                          color: kSelectedItemColor,
+                        ),
+                        Text(
+                          fromCity,
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                      ],
+                    ),
+                    ...dropOffs
+                        .map((e) => Row(
+                              children: [
+                                const SizedBox(
+                                  width: 30,
+                                ),
+                                Text(
+                                  'o $e',
+                                  style: const TextStyle(
+                                      fontSize: 14, color: kTextLightColor),
+                                ),
+                              ],
+                            ))
+                        .toList(),
+                  ],
+                ),
+              ),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color(0xFF54565D),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      child: Text(date, style: const TextStyle(fontWeight: FontWeight.bold),),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Wrap(
+                      spacing: 10,
+                      alignment: WrapAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Text(car, style: const TextStyle(fontWeight: FontWeight.w600),),
+                        const Icon(Icons.not_listed_location, size: 20,),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Wrap(
+                      spacing: 10,
+                      alignment: WrapAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Text('$peopleLeft People Left', style: const TextStyle(fontWeight: FontWeight.w600),),
+                        const Icon(CustomIcons.person, size: 20,),
+                      ],
+                    )
+                  ],
+                ),
               )
             ],
           ),

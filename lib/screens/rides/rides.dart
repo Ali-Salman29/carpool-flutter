@@ -24,8 +24,10 @@ class _RidesState extends State<Rides> {
 
   void _firstLoad() async {
     final token = Provider.of<Auth>(context, listen: false).userToken;
-    final RideArguments rideArguments= Provider.of<UserRide>(context, listen: false).rideArguments!;
-    final response = await RideApiService(token).rides(rideArguments.date, rideArguments.fromCity, rideArguments.toCity);
+    final RideArguments rideArguments =
+        Provider.of<UserRide>(context, listen: false).rideArguments!;
+    final response = await RideApiService(token).rides(
+        rideArguments.date, rideArguments.fromCity, rideArguments.toCity);
     if (response['success']) {
       List<dynamic> jsonRides = response['response']['results'];
       setState(() {
@@ -64,10 +66,7 @@ class _RidesState extends State<Rides> {
                 fromCity: _rides[index].route.fromCity.name,
                 pickups: _rides[index].pickupLocations,
                 dropOffs: _rides[index].dropOffLocations,
-                date: DateFormat.yMMMd()
-                    .add_jm()
-                    .format(_rides[index].date)
-                    .toString(),
+                date: DateFormat("MMM dd, yy hh:mm").format(_rides[index].date),
                 car: _rides[index].car.car,
                 peopleLeft: _rides[index].availableSeats,
                 riderName: 'Jemie Dunn',
