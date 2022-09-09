@@ -21,13 +21,17 @@ const kTextLightColor = Color(0xFFBEBEBE);
 
 const kAnimationDuration = Duration(milliseconds: 200);
 
+const carColors = [Color(0xFF39D374), Color(0xFFFFFFFF), Color(0xFF393FD3)];
+
 class ApiConstants {
   static String baseUrl = 'http://10.0.2.2:8000';
   static String baseUrlWithoutHttp = '10.0.2.2:8000';
   static String login = '/auth/login';
   static String currentUser = '/auth/current_user';
-  static String cities = '/rides/get_all_cities';
-  static String rides = '/rides';
+  static String rideCities = '/rides/get_all_cities';
+  static String allCities = '/cities';
+  static String rides = '/rides/';
+  static String cars = '/cars/';
 
   static Map<String, String> getBearerHeader(token){
     return {

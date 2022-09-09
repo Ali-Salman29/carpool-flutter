@@ -1,5 +1,7 @@
+import 'package:carpool/constants.dart';
 import 'package:carpool/providers/auth.dart';
 import 'package:carpool/screens/rider_home/rider_home.dart';
+import 'package:carpool/screens/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:carpool/components/gradient_button.dart';
 import 'package:provider/provider.dart';
@@ -42,22 +44,23 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Center(
-                  child: Text('hello'),
-                ),
-                const SizedBox(
-                  height: 30,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height*0.3,
+                  child: const Center(
+                    child: Image(image: AssetImage("assets/app_icon.png"))
+                  ),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Wrap(
+                    runSpacing: 10,
                     children: [
                       const Text(
                         "SignIn ",
@@ -66,16 +69,12 @@ class _SignInState extends State<SignIn> {
                             fontSize: 30,
                             fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
                       TextFormField(
                         decoration: const InputDecoration(
                           hintText: "Email or Phone ",
                           enabledBorder: UnderlineInputBorder(
                               borderSide:
                               BorderSide(color: Colors.white24, width: 2)),
-                          hintStyle: TextStyle(color: Colors.white38),
                         ),
                         keyboardType: TextInputType.text,
                         controller: username,
@@ -86,16 +85,12 @@ class _SignInState extends State<SignIn> {
                           return null;
                         },
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
                       TextFormField(
                         decoration: const InputDecoration(
                           hintText: "Password ",
                           enabledBorder: UnderlineInputBorder(
                               borderSide:
                               BorderSide(color: Colors.white24, width: 2)),
-                          hintStyle: TextStyle(color: Colors.white38),
                         ),
                         keyboardType: TextInputType.text,
                         controller: password,
@@ -115,23 +110,42 @@ class _SignInState extends State<SignIn> {
                               child: const Text(
                                 "Forget Password?",
                                 style:
-                                TextStyle(color: Colors.white38, fontSize: 15),
+                                TextStyle(color: kTextLightColor, fontSize: 15),
                               ))
                         ],
-                      ),
-                      const SizedBox(
-                        height: 30,
                       ),
                       GradientButton(
                           buttonText: 'SIGN IN',
                           onPressed: signIn,
+                          isCircular: true,
+                          margin: const EdgeInsets.symmetric(vertical: 20),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Don't have an account?",
+                            style: TextStyle(color: kTextLightColor),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(SignUp.routeName);
+                            },
+                            child: Text(
+                              "Sign up",
+                              style: TextStyle(color: Theme.of(context).primaryColor),
+                            ),
+                          )
+                        ],
                       ),
                     ],
                   ),
                 )
               ],
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -1,4 +1,10 @@
+import 'package:carpool/models/ride.dart';
+import 'package:carpool/providers/app_settings.dart';
+import 'package:carpool/providers/rider.dart';
+import 'package:carpool/services/ride_api_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../providers/auth.dart';
 import '/components/gradient_button.dart';
 
 class AddCarDetails extends StatefulWidget {
@@ -10,20 +16,40 @@ class AddCarDetails extends StatefulWidget {
 }
 
 class _AddCarDetailsState extends State<AddCarDetails> {
+  String? _token;
+  bool _isLoading = false;
+
   TextEditingController carModel = TextEditingController();
   TextEditingController registeredYear = TextEditingController();
+  TextEditingController seatingCapacity = TextEditingController();
   TextEditingController registrationNo = TextEditingController();
-  TextEditingController numberPlate = TextEditingController();
   TextEditingController color = TextEditingController();
 
   final carKey = GlobalKey<FormState>();
 
-  void validateinputs() {
+  Future<void> onSubmit() async {
     if (carKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Processing Data')),
+      final Car car = Car(
+          car: carModel.text,
+          makeYear: int.parse(registeredYear.text),
+          color: color.text,
+          seatingCapacity: int.parse(seatingCapacity.text),
+          registrationNumber: registrationNo.text,
       );
+      setState(() {
+        _isLoading = true;
+      });
+      await Provider.of<Rider>(context, listen: false).addACar(car);
+      Provider.of<AppSettings>(context, listen: false).setPageNo(1);
+      Navigator.of(context).pop();
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _token = Provider.of<Auth>(context, listen: false).userToken;
   }
 
   @override
@@ -59,6 +85,7 @@ class _AddCarDetailsState extends State<AddCarDetails> {
                   controller: carModel,
                 ),
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter some text';
@@ -78,11 +105,12 @@ class _AddCarDetailsState extends State<AddCarDetails> {
                     return null;
                   },
                   decoration: const InputDecoration(
-                    hintText: "Registeration Number",
+                    hintText: "Registration ID",
                   ),
                   controller: registrationNo,
                 ),
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter some text';
@@ -90,9 +118,9 @@ class _AddCarDetailsState extends State<AddCarDetails> {
                     return null;
                   },
                   decoration: const InputDecoration(
-                    hintText: "Number Plate",
+                    hintText: "Seating Capacity",
                   ),
-                  controller: numberPlate,
+                  controller: seatingCapacity,
                 ),
                 TextFormField(
                   validator: (value) {
@@ -110,7 +138,8 @@ class _AddCarDetailsState extends State<AddCarDetails> {
                   buttonText: 'Add a Car',
                   isCircular: true,
                   margin: const EdgeInsets.symmetric(vertical: 20),
-                  onPressed: () {},
+                  onPressed: onSubmit,
+                  isLoading: _isLoading,
                 )
               ],
             ),

@@ -2,7 +2,7 @@ import 'package:carpool/components/custom_drawer.dart';
 import 'package:carpool/components/gradient_button.dart';
 import 'package:carpool/custom_icons.dart';
 import 'package:carpool/screens/rides/rides.dart';
-import 'package:carpool/screens/search_ride/components/custom_search_delegate.dart';
+import 'package:carpool/components/custom_search_delegate.dart';
 import 'package:carpool/services/ride_api_service.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';

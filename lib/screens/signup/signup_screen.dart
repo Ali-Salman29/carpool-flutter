@@ -1,4 +1,6 @@
 import 'package:carpool/components/gradient_button.dart';
+import 'package:carpool/constants.dart';
+import 'package:carpool/screens/signin/singin.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -32,22 +34,26 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          key: signUpkey,
           child: Form(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Center(
-                      child: Image(image: AssetImage("/assets/app_icon.png"))),
-                  const Text(
-                    "SignUp",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            key: signUpkey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height*0.3,
+                  child: const Center(
+                      child: Image(image: AssetImage("assets/app_icon.png"))
                   ),
-                  Wrap(
-                    runSpacing: 20,
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Wrap(
+                    runSpacing: 10,
                     children: [
+                      const Text(
+                        "SignUp",
+                        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                      ),
                       TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -113,10 +119,8 @@ class _SignUpState extends State<SignUp> {
                         controller: confirmPassword,
                       ),
                       GradientButton(
-                        buttonText: "Sign UP",
-                        onPressed: () {
-                          validateSignupform();
-                        },
+                        buttonText: "SIGN UP",
+                        onPressed: validateSignupform,
                         isCircular: true,
                         margin: const EdgeInsets.symmetric(vertical: 20),
                       ),
@@ -125,21 +129,23 @@ class _SignUpState extends State<SignUp> {
                         children: [
                           const Text(
                             "Already have an account?",
-                            style: TextStyle(color: Colors.white54),
+                            style: TextStyle(color: kTextLightColor),
                           ),
                           TextButton(
-                            onPressed: () {},
-                            child: const Text(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(SignIn.routeName);
+                            },
+                            child: Text(
                               "Sign in",
-                              style: TextStyle(color: Colors.green),
+                              style: TextStyle(color: Theme.of(context).primaryColor),
                             ),
                           )
                         ],
                       )
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

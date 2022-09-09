@@ -1,5 +1,6 @@
 import 'package:carpool/providers/app_settings.dart';
 import 'package:carpool/providers/auth.dart';
+import 'package:carpool/providers/rider.dart';
 import 'package:carpool/providers/user_ride.dart';
 import 'package:carpool/screens/search_ride/search_ride.dart';
 import 'package:carpool/screens/signin/singin.dart';
@@ -17,13 +18,17 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (_) => Auth(),
+        ),
+        ChangeNotifierProxyProvider<Auth, Rider>(
+          create: (ctx) => Rider('', null, [], []),
+          update: (ctx, auth, previousRider) =>
+              Rider(auth.userToken, previousRider?.rider, previousRider?.cities ?? [], previousRider?.cars ?? []),
         ),
         ChangeNotifierProvider(
           create: (_) => AppSettings(),
@@ -36,13 +41,15 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Carpool',
         theme: theme(),
-        // initialRoute: RiderHome.routeName,
+        // initialRoute: SplashScreen.routeName,
         home: Builder(
           builder: (context) => FutureBuilder(
             future: Provider.of<Auth>(context, listen: false).getCurrentUser(),
             builder: (context, snapshot) =>
                 snapshot.connectionState == ConnectionState.waiting
                     ? const SplashScreen()
+                    : snapshot.hasError
+                    ? Container()
                     : snapshot.hasData
                         ? const SearchRide()
                         : const SignIn(),

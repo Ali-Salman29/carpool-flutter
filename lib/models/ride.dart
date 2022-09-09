@@ -14,23 +14,23 @@ class City {
   }
 }
 
-class Route {
+class CityRoute {
   final int? id;
-  final String toCity;
-  final String fromCity;
+  final City toCity;
+  final City fromCity;
   final double rate;
 
-  Route(
+  CityRoute(
       {this.id,
       required this.toCity,
       required this.fromCity,
       required this.rate});
 
-  factory Route.fromMap(Map<String, dynamic> data, int id) {
-    return Route(
+  factory CityRoute.fromMap(Map<String, dynamic> data, int id) {
+    return CityRoute(
       id: id,
-      toCity: data['to_city'],
-      fromCity: data['from_city'],
+      toCity: City.fromMap(data['to_city']),
+      fromCity: City.fromMap(data['from_city']),
       rate: data['rate'].toDouble(),
     );
   }
@@ -62,6 +62,17 @@ class Car {
         seatingCapacity: data['seating_capacity'],
         registrationNumber: data['registration_number']);
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'car': car,
+      'make_year': makeYear,
+      'color': color,
+      'seating_capacity': seatingCapacity,
+      'registration_number': registrationNumber,
+    };
+  }
 }
 
 class Ride {
@@ -69,7 +80,7 @@ class Ride {
   final int availableSeats;
   final int bookedSeats;
   final String gender;
-  final Route route;
+  final CityRoute route;
   final Car car;
   final DateTime date;
   final List<String> pickupLocations;
@@ -96,7 +107,7 @@ class Ride {
       availableSeats: data['available_seats'],
       bookedSeats: data['booked_seats'],
       gender: data['gender'],
-      route: Route.fromMap(data['route_data'], data['route']),
+      route: CityRoute.fromMap(data['route_data'], data['route']),
       car: Car.fromMap(data['car_data']),
       date: dateLocal,
       pickupLocations: (data['pickup_location'] as List<dynamic>)
@@ -106,6 +117,21 @@ class Ride {
           .map((e) => e['address']! as String)
           .toList(),
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'available_seats': availableSeats,
+      'booked_seats': bookedSeats,
+      'gender': gender,
+      'from_city': route.fromCity.id,
+      'to_city': route.toCity.id,
+      'car': car.id,
+      'date': DateFormat("yyyy-MM-dd HH:mm:ss").format(date.toUtc()),
+      'pickup_location': pickupLocations.map((e) => {'address': e}).toList(),
+      'dropoff_location': dropOffLocations.map((e) => {'address': e}).toList(),
+    };
   }
 }
 
