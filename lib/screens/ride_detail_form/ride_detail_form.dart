@@ -1,32 +1,70 @@
+import 'package:carpool/components/custom_search_delegate.dart';
 import 'package:carpool/components/gradient_button.dart';
 import 'package:carpool/custom_icons.dart';
 import 'package:carpool/components/rider_appbar.dart';
+import 'package:carpool/models/ride.dart';
+import 'package:carpool/providers/rider.dart';
+import 'package:carpool/services/ride_api_service.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/auth.dart';
 
 class AddRideDetails extends StatefulWidget {
   const AddRideDetails({Key? key}) : super(key: key);
   static String routeName = "/add_ride_form";
 
-  @override State<AddRideDetails> createState() => _AddRideDetailsState();
+  @override
+  State<AddRideDetails> createState() => _AddRideDetailsState();
 }
 
 class _AddRideDetailsState extends State<AddRideDetails> {
   final formKey = GlobalKey<FormState>();
 
-  List<String> cars = <String>['City', 'Civic', 'sonata', 'Mercedes S class'];
-  String selectedCar = "City";
+  String? _token;
+  List<Car> cars = [];
+  List<City> cities = [];
+  bool _isLoading = false;
+
+  Car? selectedCar;
+  City? selectedToCity;
+  City? selectedFromCity;
 
   TextEditingController numberOfSeats = TextEditingController();
   TextEditingController date = TextEditingController();
-  TextEditingController to = TextEditingController();
+  TextEditingController toCity = TextEditingController();
   List<TextEditingController> pickups = [TextEditingController()];
-  TextEditingController from = TextEditingController();
+  TextEditingController fromCity = TextEditingController();
   List<TextEditingController> dropOffs = [TextEditingController()];
 
   List<String> genders = ['Male', 'Female', 'Both'];
   String selectedGender = "Male";
+
+  Future<void> onSubmit() async{
+    if (formKey.currentState!.validate()) {
+      final Ride ride = Ride(
+        availableSeats: int.parse(numberOfSeats.text),
+        bookedSeats: 0,
+        gender: selectedGender.toUpperCase(),
+        route: CityRoute(
+            toCity: selectedToCity!, fromCity: selectedFromCity!, rate: 0),
+        car: selectedCar!,
+        date: DateTime.parse(date.text),
+        pickupLocations: pickups.map((e) => e.text).toList(),
+        dropOffLocations: dropOffs.map((e) => e.text).toList(),
+      );
+      setState(() {
+        _isLoading = true;
+      });
+      await RideApiService(_token!).addARide(ride);
+      Navigator.of(context).pop();
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   void addPickup() {
     setState(() {
@@ -35,9 +73,11 @@ class _AddRideDetailsState extends State<AddRideDetails> {
   }
 
   void removePickup(index) {
-    setState(() {
-      pickups.removeAt(index);
-    });
+    if (index != 0){
+      setState(() {
+        pickups.removeAt(index);
+      });
+    }
   }
 
   void addDropOff() {
@@ -47,15 +87,20 @@ class _AddRideDetailsState extends State<AddRideDetails> {
   }
 
   void removeDropOff(index) {
-    setState(() {
-      dropOffs.removeAt(index);
-    });
+    if (index != 0){
+      setState(() {
+        dropOffs.removeAt(index);
+      });
+    }
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _token = Provider.of<Auth>(context, listen: false).userToken;
+    cities = Provider.of<Rider>(context, listen: false).cities;
+    cars = Provider.of<Rider>(context, listen: false).cars;
     initializeDateFormatting();
   }
 
@@ -79,7 +124,7 @@ class _AddRideDetailsState extends State<AddRideDetails> {
                     ),
                     textAlign: TextAlign.start,
                   ),
-                  DropdownButtonFormField(
+                  DropdownButtonFormField<Car>(
                     isExpanded: true,
                     icon: const Icon(Icons.arrow_drop_down_circle),
                     decoration: const InputDecoration(
@@ -90,21 +135,32 @@ class _AddRideDetailsState extends State<AddRideDetails> {
                     ),
                     value: selectedCar,
                     items: cars
-                        .map((item) => DropdownMenuItem<String>(
+                        .map((item) => DropdownMenuItem<Car>(
                               value: item,
-                              child: Text(item),
+                              child: Text(item.car),
                             ))
                         .toList(),
-                    onChanged: ((String? val) {
+                    validator: (Car? item) {
+                      if (item == null) {
+                        return 'Please select a car';
+                      }
+                      return null;
+                    },
+                    onChanged: ((Car? item) {
                       setState(() {
-                        selectedCar = val!;
+                        selectedCar = item;
                       });
                     }),
                   ),
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Please enter some text";
+                        return "The value can't be empty";
+                      } else if (int.tryParse(value) == null || int.parse(value) < 1){
+                        return "The value should be a positive integer";
+                      } else if (int.parse(value) > 7){
+                        return "The value should be less than 7";
                       }
                       return null;
                     },
@@ -121,8 +177,8 @@ class _AddRideDetailsState extends State<AddRideDetails> {
                     type: DateTimePickerType.dateTime,
                     dateMask: 'd MMMM, yyyy - hh:mm a',
                     controller: date,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
+                    firstDate: DateTime.now().add(const Duration(hours: 5)),
+                    lastDate: DateTime.now().add(const Duration(days: 3)),
                     use24HourFormat: false,
                     dateHintText: 'Date and Time',
                     locale: Localizations.localeOf(context),
@@ -133,7 +189,7 @@ class _AddRideDetailsState extends State<AddRideDetails> {
                     decoration: const InputDecoration(
                       hintText: "Select a Car",
                       icon: Icon(
-                        CustomIcons.person_1,
+                        CustomIcons.person,
                       ),
                     ),
                     value: selectedGender,
@@ -156,7 +212,18 @@ class _AddRideDetailsState extends State<AddRideDetails> {
                       }
                       return null;
                     },
-                    controller: to,
+                    controller: fromCity,
+                    readOnly: true,
+                    onTap: () async {
+                      final data = await showSearch(
+                          context: context,
+                          delegate: CustomSearchDelegate(searchTerms: cities),
+                          useRootNavigator: true);
+                      if (data != null) {
+                        fromCity.text = data.name;
+                        selectedFromCity = data;
+                      }
+                    },
                     decoration: const InputDecoration(
                       hintText: "To",
                       icon: Icon(Icons.radio_button_checked_rounded),
@@ -205,9 +272,20 @@ class _AddRideDetailsState extends State<AddRideDetails> {
                       }
                       return null;
                     },
-                    controller: from,
+                    controller: toCity,
+                    readOnly: true,
+                    onTap: () async {
+                      final data = await showSearch(
+                          context: context,
+                          delegate: CustomSearchDelegate(searchTerms: cities),
+                          useRootNavigator: true);
+                      if (data != null) {
+                        toCity.text = data.name;
+                        selectedToCity = data;
+                      }
+                    },
                     decoration: const InputDecoration(
-                      hintText: "From",
+                      hintText: "To City",
                       icon: Icon(Icons.radio_button_checked_rounded),
                     ),
                   ),
@@ -253,7 +331,8 @@ class _AddRideDetailsState extends State<AddRideDetails> {
                     buttonText: 'Add a Ride',
                     isCircular: true,
                     margin: const EdgeInsets.symmetric(vertical: 20),
-                    onPressed: () {},
+                    isLoading: _isLoading,
+                    onPressed: onSubmit,
                   )
                 ],
               ),

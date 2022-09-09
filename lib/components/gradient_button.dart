@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 class GradientButton extends StatelessWidget {
   final String buttonText;
-  final Function onPressed;
+  final VoidCallback onPressed;
   final bool isCircular;
+  final bool isLoading;
   final EdgeInsets margin;
 
   const GradientButton(
@@ -12,6 +13,7 @@ class GradientButton extends StatelessWidget {
       required this.buttonText,
       required this.onPressed,
       this.isCircular = false,
+      this.isLoading = false,
       this.margin = EdgeInsets.zero})
       : super(key: key);
 
@@ -26,7 +28,7 @@ class GradientButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(isCircular ? 33 : 10)),
         ),
-        onPressed: () => onPressed(),
+        onPressed: onPressed,
         child: Ink(
           decoration: BoxDecoration(
               gradient: kPrimaryGradientColor,
@@ -34,10 +36,17 @@ class GradientButton extends StatelessWidget {
           child: Container(
             constraints: const BoxConstraints(maxWidth: 500.0, minHeight: 50.0),
             alignment: Alignment.center,
-            child: Text(
-              buttonText,
-              textAlign: TextAlign.center,
-            ),
+            child: isLoading
+                ? Transform.scale(
+                    scale: 0.7,
+                    child: const CircularProgressIndicator(
+                      color: kTextColor,
+                    ),
+                  )
+                : Text(
+                    buttonText,
+                    textAlign: TextAlign.center,
+                  ),
           ),
         ),
       ),

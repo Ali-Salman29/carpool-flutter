@@ -5,6 +5,7 @@ import 'package:carpool/screens/rides/rides.dart';
 import 'package:carpool/screens/search_ride/search_ride.dart';
 import 'package:carpool/screens/select_ride/select_ride.dart';
 import 'package:carpool/screens/signin/singin.dart';
+import 'package:carpool/screens/splash/splash.dart';
 import 'package:flutter/widgets.dart';
 import 'screens/rider_home/rider_home.dart';
 import 'screens/cars/cars.dart';
@@ -21,4 +22,5 @@ final Map<String, WidgetBuilder> routes = {
   SignIn.routeName: (context) => const SignIn(),
   Rides.routeName: (context) => const Rides(),
   SearchRide.routeName: (context) => const SearchRide(),
+  SplashScreen.routeName: (context) => const SplashScreen(),
 };

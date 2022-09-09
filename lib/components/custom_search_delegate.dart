@@ -1,6 +1,6 @@
 import 'package:carpool/services/ride_api_service.dart';
 import 'package:flutter/material.dart';
-import '../../../models/ride.dart';
+import '../models/ride.dart';
 
 class CustomSearchDelegate extends SearchDelegate<City> {
   final List<City> searchTerms;

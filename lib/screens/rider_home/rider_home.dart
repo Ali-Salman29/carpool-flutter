@@ -1,10 +1,12 @@
 import 'package:carpool/components/custom_drawer.dart';
 import 'package:carpool/components/rider_appbar.dart';
+import 'package:carpool/providers/app_settings.dart';
+import 'package:carpool/providers/rider.dart';
 import 'package:carpool/screens/cars/cars.dart';
 import 'package:carpool/screens/rider_history/rider_history.dart';
 import 'package:carpool/screens/rider_home/components/rider_navigation_bar.dart';
 import 'package:carpool/screens/rider_ride/rider_ride.dart';
-import '../rider_history/components/history_card.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 class RiderHome extends StatefulWidget {
@@ -17,7 +19,7 @@ class RiderHome extends StatefulWidget {
 }
 
 class _RiderHomeState extends State<RiderHome> {
-  int _selectedIndex = 0;
+  bool _isLoading = false;
   final List<String> _menuItems = ['Rides', 'Cars', 'History'];
   final List<Widget> _widgetOptions = <Widget>[
     const RiderRide(),
@@ -26,23 +28,49 @@ class _RiderHomeState extends State<RiderHome> {
   ];
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    Provider.of<AppSettings>(context, listen: false).setPageNo(index);
+  }
+
+  Future<void> loadRiderData() async {
+    if (!Provider.of<Rider>(context, listen: false).isLoaded) {
+      setState(() {
+        _isLoading = true;
+      });
+      await Provider.of<Rider>(context, listen: false).getCars();
+      await Provider.of<Rider>(context, listen: false).getCities();
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadRiderData();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        drawer: const CustomDrawer(),
-        appBar: RiderAppBar(
-          title: _menuItems[_selectedIndex],
-          canPop: false,
-        ),
-        body: _widgetOptions.elementAt(_selectedIndex),
-        bottomNavigationBar: RiderBottomNavigationBar(
-          currentItem: _selectedIndex,
-          onItemTapped: _onItemTapped,
-        ));
+    return Consumer<AppSettings>(
+      builder: (context, settings, chl) {
+        return Scaffold(
+            drawer: const CustomDrawer(),
+            appBar: RiderAppBar(
+              title: _menuItems[settings.pageNo],
+              canPop: false,
+            ),
+            body: _isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : _widgetOptions.elementAt(settings.pageNo),
+            bottomNavigationBar: RiderBottomNavigationBar(
+              currentItem: settings.pageNo,
+              onItemTapped: _onItemTapped,
+            ));
+      }
+    );
   }
 }

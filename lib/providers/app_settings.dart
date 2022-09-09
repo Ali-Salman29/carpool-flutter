@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
 
 class AppSettings with ChangeNotifier {
-  bool isRiderMode = false;
+  bool _isRiderMode = false;
+  int _pageNo = 0;
+
+  int get pageNo {
+    return _pageNo;
+  }
+
+  bool get isRiderMode {
+    return _isRiderMode;
+  }
 
   void switchRiderMode() {
-    isRiderMode = !isRiderMode;
+    _isRiderMode = !isRiderMode;
+    notifyListeners();
+  }
+
+  void setPageNo(pageNo) {
+    _pageNo = pageNo;
     notifyListeners();
   }
 }
