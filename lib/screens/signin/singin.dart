@@ -1,6 +1,7 @@
 import 'package:carpool/constants.dart';
 import 'package:carpool/providers/auth.dart';
 import 'package:carpool/screens/rider_home/rider_home.dart';
+import 'package:carpool/screens/search_ride/search_ride.dart';
 import 'package:carpool/screens/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:carpool/components/gradient_button.dart';
@@ -31,7 +32,7 @@ class _SignInState extends State<SignIn> {
       );
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       if (response['status']){
-        Navigator.of(context).pushNamed(RiderHome.routeName);
+        Navigator.of(context).pushNamed(SearchRide.routeName);
       } else if (response.containsKey('message')){
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(response['message']),

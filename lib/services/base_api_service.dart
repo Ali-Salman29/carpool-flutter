@@ -37,7 +37,7 @@ class BaseApiService {
           ApiConstants.getHeader()
       );
       final jsonData = json.decode(response.body);
-      if (response.statusCode == 201 && response.statusCode == 200){
+      if (response.statusCode == 201 || response.statusCode == 200){
         return {'success': true, 'error': false, 'response': jsonData};
       }
       return {'success': false, 'error': false, 'response': jsonData};

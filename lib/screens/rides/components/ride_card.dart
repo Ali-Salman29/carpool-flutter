@@ -58,7 +58,7 @@ class RideCard extends StatelessWidget {
                           color: kSelectedItemColor,
                         ),
                         Text(
-                          toCity,
+                          fromCity,
                           style: const TextStyle(fontSize: 16),
                         ),
                       ],
@@ -88,7 +88,7 @@ class RideCard extends StatelessWidget {
                           color: kSelectedItemColor,
                         ),
                         Text(
-                          fromCity,
+                          toCity,
                           style: const TextStyle(fontSize: 18),
                         ),
                       ],
