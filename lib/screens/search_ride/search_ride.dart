@@ -144,7 +144,7 @@ class _SearchRideState extends State<SearchRide> {
                             delegate:
                                 CustomSearchDelegate(searchTerms: fromCities),
                             useRootNavigator: true);
-                        if (data != null) {
+                        if (data != null && data.id !=null) {
                           fromCity.text = data.name;
                           fromCityID = data.id;
                           await getToCities(date.text, data.id!);
@@ -166,7 +166,7 @@ class _SearchRideState extends State<SearchRide> {
                             delegate:
                                 CustomSearchDelegate(searchTerms: toCities),
                             useRootNavigator: true);
-                        if (data != null) {
+                        if (data != null && data.id !=null) {
                           toCityID = data.id;
                           toCity.text = data.name;
                         }

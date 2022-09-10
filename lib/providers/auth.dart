@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:carpool/constants.dart';
+import 'package:carpool/services/auth_api_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
@@ -27,38 +28,32 @@ class Auth with ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> signIn(String username, String password) async {
-    try {
-      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.login);
-      final response = await http.post(
-        url,
-        headers: ApiConstants.getHeader(),
-        body: jsonEncode(
-            <String, String>{"username": username, "password": password}),
-      );
-      final Map<String, dynamic> jsonData = json.decode(response.body);
-      if (response.statusCode == 200) {
-        _token = jsonData['token'];
-        _user = User.fromMap(jsonData['user'] as Map<String, dynamic>);
-        storeTokenToLocalStorage(_token!);
-        notifyListeners();
-        return {'status': true, 'message': 'Successful'};
+    final response = await AuthApiService(_token).signIn(username, password);
+    print(response);
+    print("salman");
+    if (response['success']) {
+      final Map<String, dynamic> jsonData = response['response'];
+      _token = jsonData['token'];
+      _user = User.fromMap(jsonData['user'] as Map<String, dynamic>);
+      storeTokenToLocalStorage(_token!);
+      notifyListeners();
+      return {'status': true, 'message': 'Successful'};
+    } else if (response['success'] == false && response["error"] == false) {
+      var errorData = '';
+      final Map<String, dynamic> jsonData = response['response'];
+      var validationData = {};
+      if (jsonData.containsKey('non_field_errors')) {
+        errorData = jsonData['non_field_errors'][0];
       } else {
-        var errorData = '';
-        var validationData = {};
-        if (jsonData.containsKey('non_field_errors')) {
-          errorData = jsonData['non_field_errors'][0];
-        } else {
-          validationData = jsonData;
-        }
-        return {
-          'status': false,
-          'message': errorData,
-          'validations': validationData
-        };
+        validationData = jsonData;
       }
-    } catch (e) {
-      log(e.toString());
-      return {'status': false, 'message': e.toString()};
+      return {
+        'status': false,
+        'message': errorData,
+        'validations': validationData
+      };
+    } else {
+      return {'status': false, 'message': response['message']};
     }
   }
 
