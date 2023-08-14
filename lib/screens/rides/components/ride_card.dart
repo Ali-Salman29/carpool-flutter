@@ -40,8 +40,16 @@ class RideCard extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: Wrap(
-        runSpacing: 5,
+        runSpacing: 10,
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              buildBadge('Seats: $peopleLeft'),
+              buildBadge(car),
+              buildBadge(date),
+            ],
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,6 +58,7 @@ class RideCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+<<<<<<< Updated upstream
                     Wrap(
                       spacing: 5,
                       children: [
@@ -62,24 +71,18 @@ class RideCard extends StatelessWidget {
                           style: const TextStyle(fontSize: 16),
                         ),
                       ],
+=======
+                    Text(
+                      fromCity,
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
+>>>>>>> Stashed changes
                     ),
-                    ...pickups
-                        .map((e) => Row(
-                              children: [
-                                const SizedBox(
-                                  width: 30,
-                                ),
-                                Text(
-                                  'o $e',
-                                  style: const TextStyle(
-                                      fontSize: 14, color: kTextLightColor),
-                                ),
-                              ],
-                            ))
-                        .toList(),
+                    ...pickups.map((e) => buildLocation(e, CustomIcons.radio_button_on)).toList(),
                     const SizedBox(
                       height: 10,
                     ),
+<<<<<<< Updated upstream
                     Wrap(
                       spacing: 5,
                       children: [
@@ -92,63 +95,16 @@ class RideCard extends StatelessWidget {
                           style: const TextStyle(fontSize: 18),
                         ),
                       ],
+=======
+                    Text(
+                      toCity,
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+>>>>>>> Stashed changes
                     ),
-                    ...dropOffs
-                        .map((e) => Row(
-                              children: [
-                                const SizedBox(
-                                  width: 30,
-                                ),
-                                Text(
-                                  'o $e',
-                                  style: const TextStyle(
-                                      fontSize: 14, color: kTextLightColor),
-                                ),
-                              ],
-                            ))
-                        .toList(),
+                    ...dropOffs.map((e) => buildLocation(e, CustomIcons.radio_button_on)).toList(),
                   ],
                 ),
               ),
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: const Color(0xFF54565D),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      child: Text(date, style: const TextStyle(fontWeight: FontWeight.bold),),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Wrap(
-                      spacing: 10,
-                      alignment: WrapAlignment.center,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Text(car, style: const TextStyle(fontWeight: FontWeight.w600),),
-                        const Icon(Icons.not_listed_location, size: 20,),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Wrap(
-                      spacing: 10,
-                      alignment: WrapAlignment.center,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Text('$peopleLeft People Left', style: const TextStyle(fontWeight: FontWeight.w600),),
-                        const Icon(CustomIcons.person, size: 20,),
-                      ],
-                    )
-                  ],
-                ),
-              )
             ],
           ),
           ListTile(
@@ -166,7 +122,7 @@ class RideCard extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
               ),
-              child: const Text('Request Ride'),
+              child: const Text('Request Ride', style: TextStyle(fontWeight: FontWeight.w600),),
               onPressed: onRequestRide,
             ),
             contentPadding: EdgeInsets.zero,
@@ -176,6 +132,42 @@ class RideCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget buildLocation(String location, IconData iconData) {
+    return Padding(
+      padding: EdgeInsets.only(left: 10.0, bottom: 8.0),
+      child: Row(
+        children: [
+          Icon(iconData, size: 16.0),
+          SizedBox(width: 8.0),
+          Expanded(
+            flex: 1,
+            child: Text(
+              location,
+              style: TextStyle(
+                fontSize: 14.0,
+                letterSpacing: 1.62,
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildBadge(String text) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        border: Border(left: BorderSide(color: Colors.grey, width: 1)),
+        color: const Color(0xFF54565D),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold),),
     );
   }
 }

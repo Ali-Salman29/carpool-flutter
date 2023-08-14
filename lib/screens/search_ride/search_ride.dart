@@ -82,8 +82,13 @@ class _SearchRideState extends State<SearchRide> {
     // TODO: implement initState
     super.initState();
     _token = Provider.of<Auth>(context, listen: false).userToken!;
-    getFromCities(DateTime.now().toString());
     initializeDateFormatting();
+  }
+
+  @override
+  void didChangeDependencies() async {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
   }
 
   @override
@@ -127,7 +132,7 @@ class _SearchRideState extends State<SearchRide> {
                         dateMask: 'd MMMM, yyyy',
                         controller: date,
                         firstDate: DateTime(2022),
-                        lastDate: DateTime(2023),
+                        lastDate: DateTime(2040),
                         use24HourFormat: false,
                         dateHintText: 'Date',
                         locale: Localizations.localeOf(context),
@@ -197,7 +202,7 @@ class _SearchRideState extends State<SearchRide> {
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.6),
                     ),
-                    child: Center(child: CircularProgressIndicator())))
+                    child: const Center(child: CircularProgressIndicator())))
         ],
       ),
     );

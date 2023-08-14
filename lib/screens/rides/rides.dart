@@ -64,8 +64,8 @@ class _RidesState extends State<Rides> {
               itemBuilder: (context, index) => RideCard(
                 toCity: _rides[index].route.toCity.name,
                 fromCity: _rides[index].route.fromCity.name,
-                pickups: _rides[index].pickupLocations,
-                dropOffs: _rides[index].dropOffLocations,
+                pickups: _rides[index].pickupLocations.map((e) => e.address).toList(),
+                dropOffs: _rides[index].dropOffLocations.map((e) => e.address).toList(),
                 date: DateFormat("MMM dd, yy hh:mm").format(_rides[index].date),
                 car: _rides[index].car.car,
                 peopleLeft: _rides[index].availableSeats,

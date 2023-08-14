@@ -1,5 +1,33 @@
 import 'package:intl/intl.dart';
 
+class Point {
+  final double longitude;
+  final double latitude;
+
+  Point({required this.longitude, required this.latitude});
+
+  factory Point.fromMap(Map<String, dynamic> data) {
+    return Point(
+      longitude: data['longitude'],
+      latitude: data['latitude'],
+    );
+  }
+}
+
+class Location {
+  final Point location;
+  final String address;
+
+  Location({required this.location, required this.address});
+
+  factory Location.fromMap(Map<String, dynamic> data) {
+    return Location(
+      location: Point.fromMap(data['location']),
+      address: data['address'],
+    );
+  }
+}
+
 class City {
   final int? id;
   final String name;
@@ -26,9 +54,9 @@ class CityRoute {
       required this.fromCity,
       required this.rate});
 
-  factory CityRoute.fromMap(Map<String, dynamic> data, int id) {
+  factory CityRoute.fromMap(Map<String, dynamic> data) {
     return CityRoute(
-      id: id,
+      id: data['id'],
       toCity: City.fromMap(data['to_city']),
       fromCity: City.fromMap(data['from_city']),
       rate: data['rate'].toDouble(),
@@ -83,8 +111,8 @@ class Ride {
   final CityRoute route;
   final Car car;
   final DateTime date;
-  final List<String> pickupLocations;
-  final List<String> dropOffLocations;
+  final List<Location> pickupLocations;
+  final List<Location> dropOffLocations;
 
   Ride({
     this.id,
@@ -99,22 +127,73 @@ class Ride {
   });
 
   factory Ride.fromMap(Map<String, dynamic> data) {
-    final utcDateTime =
-        DateFormat("yyyy-MM-dd HH:mm:ss").parse(data['date'], true);
-    var dateLocal = utcDateTime.toLocal();
+    ///
+    /// {
+    //             "id": 23,
+    //             "pickup_locations": [
+    //                 {
+    //                     "address": "Hotel City Gate, National Highway, opposite Central Jail, Heerabad, Hyderabad",
+    //                     "location": {
+    //                         "longitude": 25.4073296,
+    //                         "latitude": 68.3669425
+    //                     }
+    //                 }
+    //             ],
+    //             "dropoff_locations": [
+    //                 {
+    //                     "address": "Karimabad",
+    //                     "location": {
+    //                         "longitude": 67.026285,
+    //                         "latitude": 24.8992661
+    //                     }
+    //                 },
+    //             ],
+    //             "car": {
+    //                 "id": 1,
+    //                 "car": "Caltus",
+    //                 "make_year": 2021,
+    //                 "color": "White",
+    //                 "seating_capacity": 4,
+    //                 "registration_number": "BRX-1232",
+    //                 "owner": 1
+    //             },
+    //             "route": {
+    //                 "id": 336,
+    //                 "to_city": {
+    //                     "id": 1,
+    //                     "name": "Karachi",
+    //                     "province": "Sindh"
+    //                 },
+    //                 "from_city": {
+    //                     "id": 6,
+    //                     "name": "Hyderabad",
+    //                     "province": "Sindh"
+    //                 },
+    //                 "rate": 1575
+    //             },
+    //             "available_seats": 4,
+    //             "booked_seats": 0,
+    //             "status": "AVAILABLE",
+    //             "gender": "MALE",
+    //             "date": "2023-04-09T09:00:00+05:00",
+    //             "user": 1
+    //         }
+    ///
+    // final utcDateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(data['date'], false);
+    // var dateLocal = utcDateTime.toLocal();
     return Ride(
       id: data['id'],
       availableSeats: data['available_seats'],
       bookedSeats: data['booked_seats'],
       gender: data['gender'],
-      route: CityRoute.fromMap(data['route_data'], data['route']),
-      car: Car.fromMap(data['car_data']),
-      date: dateLocal,
-      pickupLocations: (data['pickup_location'] as List<dynamic>)
-          .map((e) => e['address']! as String)
+      route: CityRoute.fromMap(data['route']),
+      car: Car.fromMap(data['car']),
+      date: DateTime.parse(data['date']),
+      pickupLocations: (data['pickup_locations'] as List<dynamic>)
+          .map((e) => Location.fromMap(e))
           .toList(),
-      dropOffLocations: (data['dropoff_location'] as List<dynamic>)
-          .map((e) => e['address']! as String)
+      dropOffLocations: (data['dropoff_locations'] as List<dynamic>)
+          .map((e) => Location.fromMap(e))
           .toList(),
     );
   }

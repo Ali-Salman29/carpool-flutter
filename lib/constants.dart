@@ -27,11 +27,14 @@ class ApiConstants {
   static String baseUrl = 'http://10.0.2.2:8000';
   static String baseUrlWithoutHttp = '10.0.2.2:8000';
   static String login = '/auth/login';
+  static String register = 'auth/register';
+  static String logout = 'auth/logout';
   static String currentUser = '/auth/current_user';
   static String rideCities = '/rides/get_all_cities';
   static String allCities = '/cities';
   static String rides = '/rides/';
   static String cars = '/cars/';
+  static String gcm = '/device/gcm/';
 
   static Map<String, String> getBearerHeader(token){
     return {

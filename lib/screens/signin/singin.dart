@@ -1,6 +1,9 @@
 import 'package:carpool/constants.dart';
 import 'package:carpool/providers/auth.dart';
+<<<<<<< Updated upstream
 import 'package:carpool/screens/rider_home/rider_home.dart';
+=======
+>>>>>>> Stashed changes
 import 'package:carpool/screens/search_ride/search_ride.dart';
 import 'package:carpool/screens/signup/signup_screen.dart';
 import 'package:flutter/material.dart';

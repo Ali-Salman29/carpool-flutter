@@ -9,8 +9,8 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-
 import '../../providers/auth.dart';
+import '../../models/ride.dart';
 
 class AddRideDetails extends StatefulWidget {
   const AddRideDetails({Key? key}) : super(key: key);
@@ -52,8 +52,8 @@ class _AddRideDetailsState extends State<AddRideDetails> {
             toCity: selectedToCity!, fromCity: selectedFromCity!, rate: 0),
         car: selectedCar!,
         date: DateTime.parse(date.text),
-        pickupLocations: pickups.map((e) => e.text).toList(),
-        dropOffLocations: dropOffs.map((e) => e.text).toList(),
+        pickupLocations: pickups.map((e) => Location(location: Point(longitude: 23.232, latitude: 23.4343), address: e.text)).toList(),
+        dropOffLocations: dropOffs.map((e) => Location(location: Point(longitude: 23.232, latitude: 23.4343), address: e.text)).toList(),
       );
       setState(() {
         _isLoading = true;

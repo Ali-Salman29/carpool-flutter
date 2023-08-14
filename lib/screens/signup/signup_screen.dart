@@ -1,7 +1,10 @@
 import 'package:carpool/components/gradient_button.dart';
 import 'package:carpool/constants.dart';
+import 'package:carpool/models/user.dart';
+import 'package:carpool/providers/auth.dart';
 import 'package:carpool/screens/signin/singin.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignUp extends StatefulWidget {
   static String routeName = "/signup";
@@ -21,11 +24,33 @@ class _SignUpState extends State<SignUp> {
 
   final signUpkey = GlobalKey<FormState>();
 
-  void validateSignupform() {
+  void validateSignupForm() async {
     if (signUpkey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Processing Data')),
+        const SnackBar(content: Text('Processing Data..')),
       );
+      final user = User(
+          username: username.text,
+          firstname: username.text,
+          lastname: username.text,
+          email: email.text,
+          phone: phone.text,
+          password: password.text,
+      );
+      final response = await Provider.of<Auth>(context, listen: false).register(user);
+      if (response['status']){
+        ScaffoldMessenger.of(context).showSnackBar( const SnackBar(
+              content: Text('Registered Successfully!'),
+              backgroundColor: Colors.green,
+          ),
+        );
+        Navigator.of(context).pushNamed(SignIn.routeName);
+      } else if (response.containsKey('error')){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(response['error']),
+          backgroundColor: Colors.red.shade300,
+        ));
+      }
     }
   }
 
@@ -57,7 +82,7 @@ class _SignUpState extends State<SignUp> {
                       TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
+                            return "username is required field";
                           }
                           return null;
                         },
@@ -69,7 +94,7 @@ class _SignUpState extends State<SignUp> {
                       TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
+                            return 'email is required field';
                           }
                           return null;
                         },
@@ -95,7 +120,9 @@ class _SignUpState extends State<SignUp> {
                       TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
+                            return 'Password is required';
+                          } else if (value.length < 8) {
+                            return 'Try using strong password';
                           }
                           return null;
                         },
@@ -108,7 +135,9 @@ class _SignUpState extends State<SignUp> {
                       TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
+                            return 'Confirm Password is required';
+                          } else if (value != password.text){
+                            return 'Invalid confirm password';
                           }
                           return null;
                         },
@@ -120,7 +149,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       GradientButton(
                         buttonText: "SIGN UP",
-                        onPressed: validateSignupform,
+                        onPressed: validateSignupForm,
                         isCircular: true,
                         margin: const EdgeInsets.symmetric(vertical: 20),
                       ),
